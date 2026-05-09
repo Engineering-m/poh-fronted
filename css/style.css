@@ -650,7 +650,7 @@ h4 { font-family: var(--font-mono); font-size: 13px; font-weight: 500; letter-sp
   .stat-grid { grid-template-columns: 1fr; }
   .stat-card .stat-value { font-size: 32px; }
   h1 { font-size: 28px; }
-  .main-content { padding: 16px 12px 80px 12px; }
+  .main-content { padding: 16px 12px 96px 12px; }
 }
 
 /* ── TOUCH-FRIENDLY ─────────────────────────────────────── */
@@ -662,3 +662,8 @@ h4 { font-family: var(--font-mono); font-size: 13px; font-weight: 500; letter-sp
     font-size: 16px;  /* prevents iOS zoom on focus */
   }
 }
+.bottom-nav {
+    padding-bottom: env(safe-area-inset-bottom, 8px);
+    height: auto;
+    min-height: 64px;
+  }
