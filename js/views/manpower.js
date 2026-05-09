@@ -28,6 +28,7 @@ App.views.manpower = {
     if (isEdit) { try { mp = await API.call('getManpowerDetail', App.token, {manpower_id:manpowerId}); } catch(e){} }
     var html = '<div class="form-grid"><div class="form-row"><label>NAMA LENGKAP *</label><input class="input" id="mp-nama" value="'+escapeHtml(mp?mp.nama:'')+'" /></div>' +
       '<div class="form-row"><label>NAMA PANGGILAN</label><input class="input" id="mp-pgl" value="'+escapeHtml(mp?mp.nama_panggilan:'')+'" /></div></div>' +
+      '<div class="form-row"><label>ROLES (pisah koma) *</label>' +'<input class="input" id="mp-roles" value="'+(mp&&mp.roles_array?escapeHtml(mp.roles_array.join(', ')):'')+'" ' +'placeholder="welder, technician, operator…" /></div>' +
       '<div class="form-row"><label>SKILLS (pisah koma)</label><input class="input" id="mp-skills" value="'+(mp&&mp.skills_array?escapeHtml(mp.skills_array.join(', ')):'')+'" placeholder="ASME B31.3, GTAW, ER310…" /></div>' +
       '<div class="form-grid"><div class="form-row"><label>KONTAK</label><input class="input" id="mp-kontak" value="'+escapeHtml(mp?mp.kontak||'':'')+'" /></div>' +
       '<div class="form-row"><label>STATUS</label><select class="select" id="mp-status">'+['active','inactive','archived'].map(function(s){return '<option value="'+s+'" '+(mp&&mp.status===s?'selected':'')+'>'+s+'</option>';}).join('')+'</select></div></div>' +
@@ -35,8 +36,9 @@ App.views.manpower = {
     Modal.open(isEdit?'EDIT ORANG':'TAMBAH ORANG', html,
       '<button class="btn btn-ghost" onclick="Modal.close()">BATAL</button><button class="btn" id="btn-save-mp">SIMPAN</button>');
     document.getElementById('btn-save-mp').onclick = async function() {
+      var roles  = document.getElementById('mp-roles').value.split(',').map(function(s){return s.trim();}).filter(Boolean);
       var skills = document.getElementById('mp-skills').value.split(',').map(function(s){return s.trim();}).filter(Boolean);
-      var payload = {nama:document.getElementById('mp-nama').value.trim(), nama_panggilan:document.getElementById('mp-pgl').value.trim(),
+      var payload = {nama:..., roles:roles, skills:skills, ...
         skills:skills, kontak:document.getElementById('mp-kontak').value, status:document.getElementById('mp-status').value, catatan:document.getElementById('mp-cat').value};
       if(!payload.nama){toast('Nama wajib.','error');return;}
       try{
