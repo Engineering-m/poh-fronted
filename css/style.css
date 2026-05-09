@@ -521,3 +521,144 @@ h4 { font-family: var(--font-mono); font-size: 13px; font-weight: 500; letter-sp
 .text-right { text-align: right; }
 .hidden { display: none; }
 .select { background: var(--bg-surface); border: 1px solid var(--border-strong); padding: 10px 14px; border-radius: 0; appearance: auto; font-size: 15px; font-weight: 500; }
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE RESPONSIVE — Bottom Nav, Stacked Layout
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Bottom Nav — hidden on desktop */
+.bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  z-index: 90;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.bottom-nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: var(--ink-muted);
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: color var(--transition);
+}
+
+.bottom-nav-item:hover { color: var(--ink); }
+.bottom-nav-item.active { color: var(--accent); }
+
+.bn-icon { font-size: 20px; }
+.bn-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+/* ── MOBILE BREAKPOINT ──────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Show bottom nav */
+  .bottom-nav { display: flex; }
+
+  /* Hide sidebar completely on mobile */
+  .sidebar { display: none !important; }
+  .sidebar-toggle { display: none !important; }
+
+  /* Main content takes full width + space for bottom nav */
+  .app-body { display: block; height: calc(100vh - var(--topbar-h)); }
+  .main-content {
+    padding: 20px 16px 80px 16px;
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  /* Top bar adjustments */
+  .top-bar { padding: 0 16px; }
+  .brand-text { font-size: 14px; }
+  .breadcrumb { display: none; }
+  .user-name { display: none; }
+
+  /* Typography scaling */
+  h1 { font-size: 36px; }
+  h2 { font-size: 24px; }
+  .stat-card .stat-value { font-size: 36px; }
+  .login-hero h2 { font-size: 48px; }
+
+  /* Stat grid 2 columns */
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Project cards single column */
+  .proj-grid { grid-template-columns: 1fr; }
+
+  /* Tables → horizontal scroll */
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .tbl { min-width: 600px; }
+  .tbl th, .tbl td { padding: 10px 12px; font-size: 13px; }
+
+  /* Page header stacked */
+  .page-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .page-header > div:last-child { width: 100%; display: flex; flex-wrap: wrap; gap: 8px; }
+
+  /* Modal full screen */
+  .modal {
+    width: 100%;
+    max-width: 100%;
+    max-height: 100vh;
+    height: 100vh;
+    border: none;
+  }
+  .modal-backdrop { padding: 0; }
+
+  /* Form grid stacks */
+  .form-grid { grid-template-columns: 1fr; gap: 8px; }
+
+  /* Login page mobile */
+  .login-content { grid-template-columns: 1fr; }
+  .login-hero { display: none; }
+  .login-card { padding: 32px 24px; min-height: 100vh; justify-content: center; }
+  .login-brand h1 { font-size: 32px; }
+
+  /* Buttons full width on small screens */
+  .btn { white-space: nowrap; }
+
+  /* Toast adjustments */
+  .toast-container { right: 12px; left: 12px; top: 70px; }
+  .toast { min-width: auto; }
+
+  /* Tabs scrollable */
+  .tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; flex-wrap: nowrap; }
+  .tab { white-space: nowrap; flex-shrink: 0; }
+
+  /* Calendar table — bigger min width for scroll */
+  .cal-tbl { min-width: 900px; }
+
+  /* Card padding tighter */
+  .card { padding: 16px; }
+}
+
+/* ── EXTRA SMALL (< 480px) ──────────────────────────────── */
+@media (max-width: 480px) {
+  .stat-grid { grid-template-columns: 1fr; }
+  .stat-card .stat-value { font-size: 32px; }
+  h1 { font-size: 28px; }
+  .main-content { padding: 16px 12px 80px 12px; }
+}
+
+/* ── TOUCH-FRIENDLY ─────────────────────────────────────── */
+@media (hover: none) and (pointer: coarse) {
+  .btn, .btn-icon, .nav-item, .bottom-nav-item, .tab {
+    min-height: 44px;  /* Apple HIG recommendation */
+  }
+  .input, .select, .textarea {
+    font-size: 16px;  /* prevents iOS zoom on focus */
+  }
+}
